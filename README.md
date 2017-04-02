@@ -1,4 +1,5 @@
-= Requirements =
+Requirements
+============
 
   - Docker
   - Python 3
@@ -7,7 +8,8 @@
   - git
   - Java
 
-== To Run =
+To Run
+=====
 
 To run,
 ```
