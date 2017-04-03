@@ -24,6 +24,7 @@ master:
     - ./conf/master:/conf
     - ./data:/tmp/data
     - ./code:/code
+    - ./output:/output
 
 worker:
   image: gettyimages/spark
@@ -51,3 +52,4 @@ worker:
     - ./conf/worker:/conf
     - ./data:/tmp/data
     - ./code:/code
+    - ./output:/output
