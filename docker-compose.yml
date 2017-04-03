@@ -24,6 +24,7 @@ master:
     - ./conf/master:/conf
     - ./data:/tmp/data
     - ./code:/code
+    - ./externals:/externals
     - ./output:/output
 
 worker:
@@ -52,4 +53,5 @@ worker:
     - ./conf/worker:/conf
     - ./data:/tmp/data
     - ./code:/code
+    - ./externals:/externals
     - ./output:/output
