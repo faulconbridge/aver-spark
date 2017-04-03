@@ -8,10 +8,8 @@
 
 import argparse
 import csv
-import reprlib
 import sys
-from collections import namedtuple
-import avro.schema
+import avro.schemafrom collections import namedtuple
 from avro.datafile import DataFileReader, DataFileWriter
 from avro.io import DatumReader, DatumWriter
 
@@ -28,7 +26,10 @@ parser.add_argument("-o", "--output", help="Path to Avro output destination");
 
 args = parser.parse_args();
 
-fields = ("playerID","yearID","stint","teamID","lgID","W","L","G","GS","CG","SHO","SV","IPouts","H","ER","HR","BB","SO","BAOpp","ERA","IBB","WP","HBP","BK","BFP","GF","R","SH","SF","GIDP")
+fields = ("playerID", "yearID", "stint", "teamID", "lgID",
+    "W", "L", "G", "GS", "CG", "SHO", "SV", "IPouts", "H",
+    "ER", "HR", "BB", "SO", "BAOpp", "ERA", "IBB", "WP",
+    "HBP", "BK", "BFP", "GF", "R", "SH", "SF", "GIDP")
 
 ################################################################################
 #
@@ -36,10 +37,17 @@ fields = ("playerID","yearID","stint","teamID","lgID","W","L","G","GS","CG","SHO
 #
 ################################################################################
 
+# Going this (named tuple) route since data type
+# conversion seemed marginally less hairy here
+# than using a dict. That said, there's probably
+# A Better Way (tm) to do this such that field
+# names and data types aren't hardcoded, but it
+# works well enough in the context of this specific
+# example.
 class DataReader(namedtuple('Player', fields)):
 
     @classmethod
-    def parse(klass, row):
+    def parse(dataType, row):
         row = list(row)
         row[1]  = int(row[1]) if row[1] else None
         row[2]  = int(row[2]) if row[2] else None
@@ -69,7 +77,7 @@ class DataReader(namedtuple('Player', fields)):
         row[28] = int(row[28]) if row[28] else None
         row[29] = int(row[29]) if row[29] else None
 
-        return klass(*row)
+        return dataType(*row)
 
 def read_data(path):
     with open(path, 'rU') as data:
@@ -82,6 +90,14 @@ def parse_schema(path):
     with open(path, 'r') as schema:
         return avro.schema.Parse(schema.read())
 
+# There's no compelling reason to convert our
+# CSV to an Avro binary other than I don't know
+# as much about the file format as I'd like and
+# was curious. Since these data are coming to us
+# already in a columnar format and we're writing
+# SQL-like queries against them, it would probably
+# make more sense to convert the data to Parquet
+# if we're optimizing for performance.
 def convert_to_avro(records, schema, output):
     schema = parse_schema(schema)
     with open(output, 'wb') as out:
@@ -105,6 +121,4 @@ data = read_data(args.filename)
 #
 ################################################################################
 
-# Write our Avro file to disk
 convert_to_avro(data, args.schemafile, args.output)
-
