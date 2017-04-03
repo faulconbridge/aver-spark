@@ -14,7 +14,7 @@ To Run
 To run,
 ```
 $ cd path/to/aver-spark
-$ docker-compuse up -d
+$ docker-compose up -d
 $ ./init.sh
 ```
 
