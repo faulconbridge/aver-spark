@@ -89,6 +89,18 @@ else
 fi
 
 ##########
+# TAR
+##########
+
+info "Checking whether tar is installed..."
+hasTar=$(which tar &> /dev/null)
+if [ $? -eq 1 ]; then
+  fail "Are you sure you have tar installed?"
+else
+  success "Found tar!"
+fi
+
+##########
 # Required directories
 ##########
 

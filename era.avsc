@@ -9,11 +9,11 @@
     },
     {
       "name": "yearID",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "stint",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "teamID",
@@ -25,91 +25,91 @@
     },
     {
       "name": "W",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "L",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "G",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "GS",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "CG",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "SHO",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "SV",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "IPouts",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "H",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "ER",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "HR",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "BB",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "SO",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "BAOpp",
-      "type": "float"
+      "type": ["float", "null"]
     },
     {
       "name": "ERA",
-      "type": "float"
+      "type": ["float", "null"]
     },
     {
       "name": "IBB",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "WP",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "HBP",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "BK",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "BFP",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "GF",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "R",
-      "type": "int"
+      "type": ["int", "null"]
     },
     {
       "name": "SH",
