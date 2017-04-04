@@ -9,7 +9,8 @@
 import argparse
 import csv
 import sys
-import avro.schemafrom collections import namedtuple
+import avro.schema
+from collections import namedtuple
 from avro.datafile import DataFileReader, DataFileWriter
 from avro.io import DatumReader, DatumWriter
 

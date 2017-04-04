@@ -14,15 +14,14 @@ To Run
 To run,
 ```
 $ cd path/to/aver-spark
-$ ./code/init.sh
 $ docker-compose up -d
 $ docker exec -it averspark_master_1 /bin/bash
-$ sudo python /externals/avro/setup.py install
-$ python /code/csvToAvro \
-    -f /data/Pitching.csv \
+$ /code/init.sh
+$ python /code/csvToAvro.py \
+    -f /tmp/data/Pitching.csv \
     -s /code/era.avsc
     -o /output/era.avro
-$ /usr/spark-2.1.0/bin/pyspark \
+$ /usr/spark-2.1.0/bin/spark-submit \
     /code/queryData.py \
     --packages com.databricks:spark-avro_2.11:3.2.0
 ```
