@@ -22,8 +22,8 @@ $ python /code/csvToAvro.py \
     -s /code/era.avsc
     -o /output/era.avro
 $ /usr/spark-2.1.0/bin/spark-submit \
-    /code/queryData.py \
-    --packages com.databricks:spark-avro_2.11:3.2.0
+    --packages com.databricks:spark-avro_2.11:3.2.0 \
+    /code/queryData.py
 ```
 
 This will start the Docker container, download all external dependencies, and run a couple of Spark jobs. This will output two files: `./output/era.txt` and `./output/inningsPitched.txt`.
