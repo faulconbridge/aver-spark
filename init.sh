@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ################################################################################
 #
@@ -39,7 +39,7 @@ info () {
 }
 
 user () {
-  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+  printf "\r  [ \033[0;33m??\033[0m ] $1 "
 }
 
 success () {
@@ -190,10 +190,37 @@ tar -xzvf ${SCRIPT_DIR}/externals/avro.tar.gz \
 # Install Avro
 ##########
 
-if [ "$noPy3Alias" = true ]; then
-  sudo python ${SCRIPT_DIR}/externals/avro/setup.py install
-else
-  sudo python3 ${SCRIPT_DIR}/externals/avro/setup.py install
+info "We're going to install Avro locally now. To do this,"
+info "we need to run a command with elevated privileges."
+info "If you don't trust us, that's totally fine and you"
+info "can inspect the script and choose whether to run"
+info "the command manually or not."
+user "Would you like to proceed with elevated privileges? [Y/n]"
+read -r -e proceedWithSudo
+
+if [[ ! -z "${proceedWithSudo}" ]]; then
+  proceedWithSudo=$(echo -e ${proceedWithSudo} | tr '[:upper:]' '[:lower:]')
+
+  # Basic error checking; continue to prompt while
+  # user input length > 0 and != either y or n
+  while [[ "${proceedWithSudo}" != "y" ]] &&
+        [[ "${proceedWithSudo}" != "n" ]] &&
+        [[ ! -z "${proceedWithSudo}" ]]; do
+    user "Please enter a valid value or press Enter for Yes"
+    read -r -e proceedWithSudo
+    proceedWithSudo=$(echo -e ${proceedWithSudo} | tr '[:upper:]' '[:lower:]')
+  done
 fi
 
-success "Successfully downloaded and installed Avro!"
+if [[ "${proceedWithSudo}" == "n" ]]; then
+  fail "You have aborted script execution"
+else
+  cd ${SCRIPT_DIR}/externals/avro
+  if [ "$noPy3Alias" = true ]; then
+    sudo python ./setup.py install
+  else
+    sudo python3 ./setup.py install
+  fi
+
+  success "Successfully downloaded and installed Avro!"
+fi
