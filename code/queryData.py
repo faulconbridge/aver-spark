@@ -5,11 +5,11 @@ spark = SparkSession.builder \
   .appName("ERA") \
   .getOrCreate()
 
-df = sqlContext.read \
+df = spark.read \
   .format('com.databricks.spark.avro') \
   .load('/output/era.avro')
 df.registerTempTable("era")
-sqlContext.sql("""SELECT playerID, ERA
+spark.sql("""SELECT playerID, ERA
   FROM era
   WHERE yearID = '2006'
     AND ERA <> 0.0
@@ -17,7 +17,7 @@ sqlContext.sql("""SELECT playerID, ERA
   LIMIT 10
 """).show()
 
-sqlContext.sql("""SELECT playerID, IPOuts
+spark.sql("""SELECT playerID, IPOuts
   FROM era
   WHERE yearID = '2006'
   ORDER BY IPOUTS DESC
