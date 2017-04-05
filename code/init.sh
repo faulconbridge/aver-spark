@@ -6,6 +6,13 @@
 #
 ################################################################################
 
+# I was originally going to use the same directory
+# as the init script for everything, but then things
+# got weird with Docker mounts not corresponding to
+# the actual file hierarchy here in the repo, so I
+# nixed it, tucked the init script into /code and
+# 
+# SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SCRIPT_DIR="/tmp"
 
 # Convenience functions to make horrible errors less frightening
@@ -139,6 +146,11 @@ if [ ! -d "${SCRIPT_DIR}/externals" ]; then
   mkdir ${SCRIPT_DIR}/externals
 fi
 
+info "Creating an output directory..."
+if [ ! -d "${SCRIPT_DIR}/output" ]; then
+  mkdir ${SCRIPT_DIR}/output
+fi
+
 ################################################################################
 #
 # Download data and some other fun
@@ -154,14 +166,14 @@ fi
 info "Downloading and extracting your datasets..."
 if [ "$useCurl" = true ]; then
   curl http://seanlahman.com/files/database/lahman2012-csv.zip \
-    -o ${SCRIPT_DIR}/data/baseball.zip
+    -o ${SCRIPT_DIR}/data/baseball.zip &> ${SCRIPT_DIR}/init.log
 else
   wget http://seanlahman.com/files/database/lahman2012-csv.zip \
-    -O ${SCRIPT_DIR}/data/baseball.zip
+    -O ${SCRIPT_DIR}/data/baseball.zip &> ${SCRIPT_DIR}/init.log
 fi
 
-unzip ${SCRIPT_DIR}/data/baseball.zip \
-  -d ${SCRIPT_DIR}/data
+unzip -u ${SCRIPT_DIR}/data/baseball.zip \
+  -d ${SCRIPT_DIR}/data &> /dev/null
 success "Datasets successfully downloaded and unzipped!"
 
 ##########
@@ -172,10 +184,10 @@ info "Downloading external dependencies..."
 # Download Avro
 if [ "$useCurl" = true ]; then
   curl http://www.gtlib.gatech.edu/pub/apache/avro/avro-1.8.1/py3/avro-python3-1.8.1.tar.gz \
-    -o ${SCRIPT_DIR}/externals/avro.tar.gz
+    -o ${SCRIPT_DIR}/externals/avro.tar.gz &> ${SCRIPT_DIR}/init.log
 else
   wget http://www.gtlib.gatech.edu/pub/apache/avro/avro-1.8.1/py3/avro-python3-1.8.1.tar.gz \
-    -O ${SCRIPT_DIR}/externals/avro.tar.gz
+    -O ${SCRIPT_DIR}/externals/avro.tar.gz &> ${SCRIPT_DIR}/init.log
 fi
 
 if [ ! -d "${SCRIPT_DIR}/externals/avro" ]; then
@@ -184,7 +196,7 @@ fi
 
 tar -xzvf ${SCRIPT_DIR}/externals/avro.tar.gz \
   -C ${SCRIPT_DIR}/externals/avro \
-  --strip-components=1
+  --strip-components=1 &> ${SCRIPT_DIR}/init.log
 
 ##########
 # Install Avro
@@ -218,9 +230,9 @@ tar -xzvf ${SCRIPT_DIR}/externals/avro.tar.gz \
   cd ${SCRIPT_DIR}/externals/avro
 
   if [ "$noPy3Alias" = true ]; then
-    python ./setup.py install
+    python ./setup.py install &> ${SCRIPT_DIR}/init.log
   else
-    python3 ./setup.py install
+    python3 ./setup.py install &> ${SCRIPT_DIR}/init.log
   fi
 
   success "Successfully downloaded and installed Avro!"
