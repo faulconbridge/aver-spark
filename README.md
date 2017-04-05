@@ -26,7 +26,7 @@ $ /usr/spark-2.1.0/bin/spark-submit \
     /code/queryData.py
 ```
 
-This will start the Docker container, download all external dependencies, and run a couple of Spark jobs. This will output two files: `./output/era.txt` and `./output/inningsPitched.txt`.
+This will start the Docker container, download all external dependencies, and run a couple of Spark jobs. This will output CSVs containing the result sets to two directories: `./output/lowestERA/` and `./output/mostInnings/`.
 
 Sources Consulted
 =================
