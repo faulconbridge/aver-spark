@@ -13,6 +13,7 @@ To Run
 
 To run,
 ```
+$ git clone https://github.com/faulconbridge/aver-spark.git
 $ cd path/to/aver-spark
 $ docker-compose up -d
 $ docker exec -it averspark_master_1 /bin/bash
