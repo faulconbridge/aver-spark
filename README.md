@@ -20,7 +20,7 @@ $ docker exec -it averspark_master_1 /bin/bash
 $ /code/init.sh
 $ python /code/csvToAvro.py \
     -f /tmp/data/Pitching.csv \
-    -s /code/era.avsc
+    -s /code/era.avsc \
     -o /output/era.avro
 $ /usr/spark-2.1.0/bin/spark-submit \
     --packages com.databricks:spark-avro_2.11:3.2.0 \
